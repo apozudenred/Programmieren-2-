@@ -1,8 +1,7 @@
 package calculator;
-
-public class Add implements Operation {
+public class Sub implements Operation {
     @Override
     public int calculate(int a, int b) {
-        return a + b;
+        return a - b;
     }
 }

@@ -43,41 +43,30 @@ public class Calculator extends JFrame {
         operations = new HashMap<>();
         operations.put("Add", new Add());
 
-        // TODO
-        // Add a new operation "Sub" for the subtraction of two integers as an (instance of a) Java
-        // class (you have yet to write this class)
+        // Aufgabe 1.1: Instanz der Klasse Sub
+        operations.put("-", new Sub());
 
-        // TODO
-        // Add a new operation "Mul" for the multiplication of two integers as an anonymous class
+        // Aufgabe 1.2: Anonyme Klasse für Multiplikation
+        operations.put("*", new Operation() {
+            @Override
+            public int calculate(int a, int b) {
+                return a * b;
+            }
+        });
 
-        // TODO
-        // Add a new operation "Div" for the division of two integers as a lambda expression
+        // Aufgabe 1.3: Lambda Ausdruck für Division
+        operations.put("/", (a, b) -> a / b);
 
         operationSelector = new JComboBox<>();
         operations.forEach((key, value) -> operationSelector.addItem(key));
 
-        // TODO
-        // Replace the anonymous class with a lambda expression
-        operationSelector.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        try {
-                            result.setText("" + calculate());
-                        } catch (NumberFormatException ex) {
-                            System.out.println("Invalid input.");
-                        }
-                    }
-                });
+
+
+        //  Aufgabe 1.4:
+        operationSelector.addActionListener(e -> calculate());
     }
 
-    /**
-     * Create a main panel for the calculator.
-     *
-     * <p>Our panel consists of two text fields for entering the operands (integers), a combo box
-     * for selecting the operations, a button for executing the operations and a text field for
-     * displaying the result.
-     */
+
     private void setupPanel() {
         JPanel panel = new JPanel();
 
@@ -111,7 +100,7 @@ public class Calculator extends JFrame {
         // button to trigger the calculation
         JButton solutionButton = new JButton("=");
         solutionButton.addActionListener(
-                e -> {
+            (e)-> {
                     try {
                         result.setText("" + calculate());
                     } catch (NumberFormatException ex) {
@@ -141,7 +130,7 @@ public class Calculator extends JFrame {
         Operation operation = operations.get(operationSelector.getSelectedItem());
         int a = Integer.parseInt(lhs.getText());
         int b = Integer.parseInt(rhs.getText());
-        return operation.doOperation(a, b);
+        return operation.calculate(a, b);
     }
 
     /** Tests the text field to verify whether an integer has been entered. */
